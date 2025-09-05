@@ -1,0 +1,123 @@
+@for (orderDispenserData of manageDataService.orderDispenserData(); track orderDispenserData.orderId) {
+
+    <div class="dropdown-container" [class.active]="toggleDropdownOpenMap().get(orderDispenserData.orderId)">
+      
+        <div class="dropdown-trigger" (click)="toggleDropdown(orderDispenserData.orderId)">
+            <div class="flex-container">
+        <p class="flex-item">Order Id = {{ orderDispenserData.orderId }}</p>
+        <p class="flex-item">Order Sequence = {{ orderDispenserData.orderDispenserSequenceNumber }}</p>
+        <p class="flex-item">Order total = {{ orderDispenserData.totalAmount }}</p>
+        
+    </div>
+    </div>
+    @if(toggleDropdownOpenMap().get(orderDispenserData.orderId)){
+        <div class="dropdown-content">
+          <ul>
+            @for (orderEntry of orderDispenserData.orderEntries; track orderEntry.orderEntryId) {
+              <li>
+                <div class="flex-container">
+                  <div class="flex-item">{{orderEntry.item.name}}</div>
+                  <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+                   <div class="flex-container1">
+                   @if(orderEntry.dineInTotalItemPrice>0){
+                      <div class="flex-item">One pice price = @if (orderEntry.item.singlePiecePrice) {
+                          {{orderEntry.item.singlePiecePrice}}
+                      }@else {"N/A"}</div>
+                      
+                      <div class="flex-item">
+                          <div id="pieceQuantityContainer">
+                              @if (orderEntry.item.singlePiecePrice) {
+                                  <button (click)="decreaseDineInPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction">-</button>
+                              <input type="number" id="pieceQuantity" [value]="orderEntry.dineInPieceQuantity" class="pieceQuantity" readonly/>
+                              <button (click)="increaseDineInPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceAddition" class="pieceAddition" >+</button>
+                              }@else {
+                                  <button (click)="decreaseDineInPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction" disabled>-</button>
+                                  <input type="number" id="pieceQuantity" [value]="orderEntry.dineInPieceQuantity" class="pieceQuantity" readonly/>
+                                  <button (click)="increaseDineInPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceAddition" class="pieceAddition" disabled>+</button>
+                              }
+                          </div>
+                      </div>
+                  
+                      <div class="flex-item">Total DineIn pices price = {{orderEntry.dineInTotalPiecePrice}}</div>
+                      <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+                  
+                      <div class="flex-item">One plate price = {{orderEntry.item.platePrice}}<br>Quantity per plate = {{orderEntry.item.quantityPerPlate}}</div>
+                  
+                      <div class="flex-item">
+                          <div id="plateQuantityContainer">
+                              <button (click)="decreaseDineInPlateQuantity(orderEntry.item.itemId)" type="button" id="plateSubtraction" class="plateSubtraction">-</button>
+                              <input type="number" id="plateQuantity" [value]="orderEntry.dineInPlateQuantity" class="plateQuantity" readonly/>
+                              <button (click)="increaseDineInPlateQuantity(orderEntry.item.itemId)" type="button" id="plateAddition" class="plateAddition">+</button>
+                          </div>
+                      </div>
+                  
+                      <div class="flex-item">Total DineIn plate(s) price = {{orderEntry.dineInTotalPlatePrice}} rs</div>
+                      <div class="flex-item"><input type="checkbox" (click)="isParcel(orderEntry.item.itemId, true)" [checked]="(orderEntry.dineInTotalPlatePrice) ? null : null">Parcel</div>
+                   }
+                   @if(orderEntry.takeawayTotalItemPrice>0){
+                      <div class="flex-item">One pice price = @if (orderEntry.item.singlePiecePrice) {
+                          {{orderEntry.item.singlePiecePrice}}
+                      }@else {"N/A"}</div>
+                      
+                      <div class="flex-item">
+                          <div id="pieceQuantityContainer">
+                              @if (orderEntry.item.singlePiecePrice) {
+                                  <button (click)="decreaseTakeawayPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction">-</button>
+                              <input type="number" id="pieceQuantity" [value]="orderEntry.takeawayPieceQuantity" class="pieceQuantity" readonly/>
+                              <button (click)="increaseTakeawayPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceAddition" class="pieceAddition" >+</button>
+                              }@else {
+                                  <button (click)="decreaseTakeawayPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction" disabled>-</button>
+                                  <input type="number" id="pieceQuantity" [value]="orderEntry.takeawayPieceQuantity" class="pieceQuantity" readonly/>
+                                  <button (click)="increaseTakeawayPieceQuantity(orderEntry.item.itemId)" type="button" id="pieceAddition" class="pieceAddition" disabled>+</button>
+                              }
+                          </div>
+                      </div>
+                  
+                      <div class="flex-item">Total Takeaway pices price = {{orderEntry.takeawayTotalPiecePrice}}</div>
+                      <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+                  
+                      <div class="flex-item">One plate price = {{orderEntry.item.platePrice}}<br>Quantity per plate = {{orderEntry.item.quantityPerPlate}}</div>
+                  
+                      <div class="flex-item">
+                          <div id="plateQuantityContainer">
+                              <button (click)="decreaseTakeawayPlateQuantity(orderEntry.item.itemId)" type="button" id="plateSubtraction" class="plateSubtraction">-</button>
+                              <input type="number" id="plateQuantity" [value]="orderEntry.takeawayPlateQuantity" class="plateQuantity" readonly/>
+                              <button (click)="increaseTakeawayPlateQuantity(orderEntry.item.itemId)" type="button" id="plateAddition" class="plateAddition">+</button>
+                          </div>
+                      </div>
+                  
+                      <div class="flex-item">Total Takeaway plate(s) price = {{orderEntry.takeawayTotalPlatePrice}} rs</div>
+                      <div class="flex-item"><input (click)="isParcel(orderEntry.item.itemId, false)" type="checkbox" [value]="true" [checked]="(orderEntry.takeawayTotalItemPrice) ? true : null">Parcel</div>
+                   }
+                   </div>
+                  <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+                  <div class="flex-item">Total Item Price = {{orderEntry.totalItemPrice}} rs</div>
+
+                  <div class="flex-item">
+                  <div>
+                  <label for="itemStatus">Item sattus</label>
+                </div>
+                  <select name="itemStatus" id="itemStatus">
+                    <option value="delivered">Delivered</option>
+                    <option value="hold">Hold</option>
+                    <option value="remove">Remove</option>
+                  </select>
+                </div>
+              
+                </div>
+                <hr>
+              </li>
+            }
+          </ul>
+        </div>
+        <button class="flex-item" (click)="orderDelivered(orderDispenserData.orderId)">Delivered</button>
+    <button class="flex-item" (click)="holdOrder(orderDispenserData.orderId)">Hold</button>
+    <button class="flex-item" (click)="cancelOrder(orderDispenserData.orderId)">Cancel</button>
+      }
+      </div>
+
+     
+
+}
+
+<button (click)="goToMenu()">Go To Menu</button>

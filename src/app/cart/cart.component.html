@@ -1,0 +1,98 @@
+
+<h1>Your Cart Items</h1>
+@for (item of manageDataService.cartData().cartEntries; track item.itemId) {
+
+  <div class="flex-container">
+    <div class="flex-item">{{item.name}}</div>
+    <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+     <div class="flex-container1">
+     @if(item.selectedTotalItemPrice>0){
+        <div class="flex-item">One pice price = @if (item.singlePiecePrice) {
+            {{item.singlePiecePrice}}
+        }@else {"N/A"}</div>
+        
+        <div class="flex-item">
+            <div id="pieceQuantityContainer">
+                @if (item.singlePiecePrice) {
+                    <button (click)="decreaseDineInPieceQuantity(item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction">-</button>
+                <input type="number" id="pieceQuantity" [value]="item.selectedPieceQuantity" class="pieceQuantity" readonly/>
+                <button (click)="increaseDineInPieceQuantity(item.itemId)" type="button" id="pieceAddition" class="pieceAddition" >+</button>
+                }@else {
+                    <button (click)="decreaseDineInPieceQuantity(item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction" disabled>-</button>
+                    <input type="number" id="pieceQuantity" [value]="item.selectedPieceQuantity" class="pieceQuantity" readonly/>
+                    <button (click)="increaseDineInPieceQuantity(item.itemId)" type="button" id="pieceAddition" class="pieceAddition" disabled>+</button>
+                }
+            </div>
+        </div>
+    
+        <div class="flex-item">Total DineIn pices price = {{item.selectedTotalPiecePrice}}</div>
+        <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+    
+        <div class="flex-item">One plate price = {{item.platePrice}}<br>Quantity per plate = {{item.quantityPerPlate}}</div>
+    
+        <div class="flex-item">
+            <div id="plateQuantityContainer">
+                <button (click)="decreaseDineInPlateQuantity(item.itemId)" type="button" id="plateSubtraction" class="plateSubtraction">-</button>
+                <input type="number" id="plateQuantity" [value]="item.selectedPlateQuantity" class="plateQuantity" readonly/>
+                <button (click)="increaseDineInPlateQuantity(item.itemId)" type="button" id="plateAddition" class="plateAddition">+</button>
+            </div>
+        </div>
+    
+        <div class="flex-item">Total DineIn plate(s) price = {{item.selectedTotalPlatePrice}} rs</div>
+        <div class="flex-item"><input type="checkbox" (click)="isParcel(item.itemId, true)" [checked]="(item.selectedTotalPlatePrice) ? null : null">Parcel</div>
+     }
+     @if(item.selectedTakeawayTotalItemPrice>0){
+        <div class="flex-item">One pice price = @if (item.singlePiecePrice) {
+            {{item.singlePiecePrice}}
+        }@else {"N/A"}</div>
+        
+        <div class="flex-item">
+            <div id="pieceQuantityContainer">
+                @if (item.singlePiecePrice) {
+                    <button (click)="decreaseTakeawayPieceQuantity(item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction">-</button>
+                <input type="number" id="pieceQuantity" [value]="item.selectedTakeawayPieceQuantity" class="pieceQuantity" readonly/>
+                <button (click)="increaseTakeawayPieceQuantity(item.itemId)" type="button" id="pieceAddition" class="pieceAddition" >+</button>
+                }@else {
+                    <button (click)="decreaseTakeawayPieceQuantity(item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction" disabled>-</button>
+                    <input type="number" id="pieceQuantity" [value]="item.selectedTakeawayPieceQuantity" class="pieceQuantity" readonly/>
+                    <button (click)="increaseTakeawayPieceQuantity(item.itemId)" type="button" id="pieceAddition" class="pieceAddition" disabled>+</button>
+                }
+            </div>
+        </div>
+    
+        <div class="flex-item">Total Takeaway pices price = {{item.selectedTakeawayTotalPiecePrice}}</div>
+        <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+    
+        <div class="flex-item">One plate price = {{item.platePrice}}<br>Quantity per plate = {{item.quantityPerPlate}}</div>
+    
+        <div class="flex-item">
+            <div id="plateQuantityContainer">
+                <button (click)="decreaseTakeawayPlateQuantity(item.itemId)" type="button" id="plateSubtraction" class="plateSubtraction">-</button>
+                <input type="number" id="plateQuantity" [value]="item.selectedTakeawayPlateQuantity" class="plateQuantity" readonly/>
+                <button (click)="increaseTakeawayPlateQuantity(item.itemId)" type="button" id="plateAddition" class="plateAddition">+</button>
+            </div>
+        </div>
+    
+        <div class="flex-item">Total Takeaway plate(s) price = {{item.selectedTakeawayTotalPlatePrice}} rs</div>
+        <div class="flex-item"><input (click)="isParcel(item.itemId, false)" type="checkbox" [value]="item.isParcel" [checked]="(item.selectedTakeawayTotalPlatePrice) ? true : null">Parcel</div>
+     }
+     </div>
+    <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
+    <div class="flex-item">Total Item Price = {{item.totalItemPrice}} rs</div>
+    <div class="flex-item"><button (click)="removeFromCart(item.itemId)">Remove</button></div>
+
+  </div>
+  <hr>
+  }
+
+@if (manageDataService.cartData().totalCartPrice == 0) {
+        <h4>No items added to cart</h4>
+      }
+     <h3>Total Cart Price = {{manageDataService.cartData().totalCartPrice}} rs          <button class="placeOrderButton" (click)="placeOrder()">Place Order</button></h3>
+    @if(manageDataService.orderData().orderDispenserSequenceNumber != null) {
+     <h2>Placed Order Details</h2>
+     Order Placed with Id = {{ orderId() }} and Order Sequence = {{ manageDataService.orderData().orderDispenserSequenceNumber }} and Order Total = {{ manageDataService.orderData().orderTotal }} rs
+    }
+
+
+    <button (click)="goToMenu()">Go To Menu</button> <button (click)="goToDispenser()">Go To OrderDispenser</button>

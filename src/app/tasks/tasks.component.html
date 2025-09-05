@@ -1,0 +1,61 @@
+<!-- <html lang="en">
+
+<body> -->
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Start Time</th>
+                <th>Time Taken</th>
+                <th>End Time</th>
+                <th>Procedure</th>
+                <!-- <th>Task Items</th> -->
+                <th>Task Owner</th>
+                <th>Status</th>
+                <th>Task For</th>
+                
+                <th>Description</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @for (task of taskDataList; track task.taskId) {
+            <tr [ngClass]="{ 'rowTable': task.completed }">
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.startTime.slice(0, 5)}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskDuration}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.endTime.slice(0, 5)}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskProcedure}}</td>
+                <!-- <td [ngClass]="{ 'rowLine': task.completed }">
+                    @for (item of task.itemsUsed | keyvalue; track item.key) {
+                    {{ item.key }},
+                    }
+                </td> -->
+                <td [ngClass]="{ 'rowLine': task.completed }">
+                    @for (assignedTo of task.assignedTo; track assignedTo) {
+                    {{assignedTo}}
+                    }
+                </td>
+                <td [ngClass]="{ 'rowLine': task.completed }"><label class="container">
+                        <input type="checkbox" (click)="taskStatusUpdate(task.taskId)" [checked]="task.completed">Done
+                        <span class="checkmark"></span>
+                    </label></td>
+                <td [ngClass]="{ 'rowLine': task.completed }">
+                    @for (recipe of task.taskFor; track recipe) {
+                    {{recipe}},
+                    }
+                </td>
+                
+                <td [ngClass]="{ 'rowLine': task.completed }" class="wrap-text">{{task.taskDescription}}</td>
+
+            </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+<!-- </body>
+
+</html> -->

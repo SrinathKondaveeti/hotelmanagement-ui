@@ -1,0 +1,190 @@
+<button (click)="createAllTasks()">Create All Tasks</button>
+<button (click)="getAllTasks()">Get All Tasks</button>
+<button (click)="createTask()">Add New Task</button>
+
+<br><br><br>
+@if (createNewTask) {
+<h4>Creating New task</h4>
+
+
+<form [formGroup]="addNewTaskForm" (ngSubmit)="updateForm()">
+  <!-- Your other form fields remain the same -->
+  <div>
+    <label>Start Time:</label>
+    <input type="time" min="00:00" max="23:59" step="60" formControlName="startTime">
+  </div>
+
+  <div>
+    <label>End Time:</label>
+    <input type="time" min="00:00" max="23:59" step="60" formControlName="endTime">
+  </div>
+
+  <div>
+    <label>Task Owner:</label>
+    <input type="text" formControlName="taskOwner">
+  </div>
+
+  <div>
+    <label>Task Procedure Type:</label>
+    <input type="text" formControlName="taskProcedureType">
+  </div>
+
+  <!-- FIXED: Task For Array Section -->
+  <div>
+    <label>Add Task For:</label>
+    <input type="text" [formControl]="newTaskForControl">
+    <button type="button" (click)="addTaskFor()">Add</button>
+    
+    <!-- Display the FormArray items -->
+    <ul>
+      <li *ngFor="let item of taskFor.controls; let i = index">
+        {{ item.value }}
+        <button type="button" (click)="removeTaskFor(i)">Remove</button>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <label>Task At:</label>
+    <select id="time" formControlName="taskAt">
+      <option value="">-- Choose Task At --</option>
+      <option value="now">Now</option>
+      <option value="evening">Evening</option>
+      <option value="tomorrowMorning">Tomorrow Morning</option>
+      <option value="tomorrowEvening">Tomorrow Evening</option>
+    </select>
+  </div>
+  
+
+  <div>
+    <label>Task Description:</label>
+    <textarea formControlName="taskDescription" name="taskDescription" rows="4" cols="50"></textarea>
+  </div>
+
+  <button type="submit" [disabled]="addNewTaskForm.invalid">Add Task</button>
+</form>
+}
+
+
+@if (displayEditTaskForm) {
+<h4>Edit task</h4>
+
+
+<form [formGroup]="updateTaskForm" (ngSubmit)="createForm()">
+  <!-- Your other form fields remain the same -->
+    <div>
+    <label>Task Id:</label>
+    <input type="text" formControlName="taskId" value="selectedEditTaskData.taskId" readonly>
+  </div>
+  <div>
+    <label>Start Time:</label>
+    <input type="time" min="00:00" max="23:59" step="60" formControlName="startTime" value="selectedEditTaskData.startTime">
+  </div>
+
+  <div>
+    <label>End Time:</label>
+    <input type="time" min="00:00" max="23:59" step="60" formControlName="endTime">
+  </div>
+
+  <div>
+    <label>Task Owner:</label>
+    <input type="text" formControlName="taskOwner" [value]="selectedEditTaskData!.assignedTo">
+  </div>
+
+  <div>
+    <label>Task Procedure Type:</label>
+    <input type="text" formControlName="taskProcedureType">
+  </div>
+
+  <!-- FIXED: Task For Array Section -->
+  <div>
+    <label>Add Task For:</label>
+    <input type="text" [formControl]="newTaskForControl">
+    <button type="button" (click)="addTaskFor()">Add</button>
+    
+    <!-- Display the FormArray items -->
+    <ul>
+      <li *ngFor="let item of recipes; let i = index">
+        {{ item }}
+        <button type="button" (click)="removeTaskFor(i)">Remove</button>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <label>Task At:</label>
+    <select id="time" formControlName="taskAt">
+      <option value="">-- Choose Task At --</option>
+      <option value="now">Now</option>
+      <option value="evening">Evening</option>
+      <option value="tomorrowMorning">Tomorrow Morning</option>
+      <option value="tomorrowEvening">Tomorrow Evening</option>
+    </select>
+  </div>
+  
+
+  <div>
+    <label>Task Description:</label>
+    <textarea formControlName="taskDescription" name="taskDescription" rows="4" cols="50"></textarea>
+  </div>
+
+  <button type="submit" [disabled]="updateTaskForm.invalid">Update Task</button>
+</form>
+}
+
+@if (displayAllTasks) {
+
+
+    <div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Task Id</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Procedure Type</th>
+                <th>Task Items</th>
+                <th>Task Owner</th>
+                <th>Task For</th>
+                
+                <th>Task At</th>
+                <th>Delete</th>
+                <th>Edit</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @for (task of taskDataList; track task.taskId) {
+            <tr [ngClass]="{ 'rowTable': task.completed }">
+              <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskId}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.startTime.slice(0, 5)}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.endTime.slice(0, 5)}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskProcedure}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">
+                    @for (item of task.itemsUsed | keyvalue; track item.key) {
+                    {{ item.key }},
+                    }
+                </td>
+                <td [ngClass]="{ 'rowLine': task.completed }">
+                    @for (assignedTo of task.assignedTo; track assignedTo) {
+                    {{assignedTo}}
+                    }
+                </td>
+                <td [ngClass]="{ 'rowLine': task.completed }">
+                    @for (recipe of task.taskFor; track recipe) {
+                    {{recipe}},
+                    }
+                </td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskAt}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }" (click)="showConfirm(task.taskId)"><button>Detele</button></td>
+                <td [ngClass]="{ 'rowLine': task.completed }" (click)="displayEditTaskFormFun(task.taskId)"><button>Edit</button></td>
+
+            </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+}

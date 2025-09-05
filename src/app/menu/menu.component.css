@@ -1,0 +1,20 @@
+.flex-container {
+    display: flex;
+    /* flex-wrap: wrap; Allows items to wrap on smaller screens */
+    gap: 1px; /* Space between items */
+  }
+  
+  .flex-item {
+    flex: 1; /* Items will grow and shrink equally */
+    min-width: 175px; /* Minimum width before wrapping */
+  }
+
+  .pieceQuantity {
+  
+    width:30px
+  }
+
+  .plateQuantity {
+  
+    width:30px
+  }

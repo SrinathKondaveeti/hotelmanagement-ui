@@ -1,0 +1,36 @@
+<h2>Login Form</h2>
+
+<form [formGroup]="userLoginForm" (ngSubmit)="onUserLoginformSubmit()">
+
+  <div class="container">
+    <label for="phoneNumber"><b>Phone Number</b></label>
+    <div class="phoneNumberContainer"><b>+91</b><input formControlName="phoneNumber" type="tel" placeholder="Enter Phone Number" name="phoneNumber" required></div>
+
+    @if (userLoginForm.controls['phoneNumber'].dirty && userLoginForm.controls['phoneNumber'].hasError('required')) {
+      ⚠️ Phone number is required!<br><br>
+    }
+    @if (userLoginForm.controls['phoneNumber'].dirty && userLoginForm.controls['phoneNumber'].hasError('pattern')) {
+      ⚠️ Phone number must be only numbers!<br><br>
+    }
+    @if ((userLoginForm.controls['phoneNumber'].touched || userLoginForm.controls['phoneNumber'].dirty)  && userLoginForm.controls['phoneNumber'].hasError('minlength') || userLoginForm.controls['phoneNumber'].hasError('maxlength')) {
+      ⚠️ Phone number must be 10 digits!<br><br>
+    }
+
+    <label for="password"><b>Password</b></label>
+    <input type="password" formControlName="password" placeholder="Enter Password" name="password" required>
+
+    @if (userLoginForm.controls['password'].dirty && userLoginForm.controls['password'].hasError('required')) {
+      ⚠️ password is required!<br><br>
+    }
+
+    @if (isCredentialsMatching()) {
+      ❌ In valid credentials! or Something went wrong<br><br>
+    }
+        
+    <button type="submit">Login</button>
+    
+      New User ? <button (click)="showComponent()">Sign Up</button>
+
+  </div>
+</form>
+
