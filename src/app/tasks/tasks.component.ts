@@ -43,12 +43,12 @@ export class TasksComponent {
   // }
 
   taskStatusUpdate(taskId: string) {
-    this.httpClient
-      .put<string>(`${this.baseUrl}/updateTaskStatus/` + taskId, {})
-      .subscribe((taskId) => {
-        console.log('updated', taskId);
-      });
-    console.log(taskId);
+    // this.httpClient
+    //   .put<string>(`${this.baseUrl}/updateTaskStatus/` + taskId, {})
+    //   .subscribe((taskId) => {
+    //     console.log('updated', taskId);
+    //   });
+    // console.log(taskId);
 
     this.httpClient
       .put<string>(`${this.baseUrl}/task/updateTaskStatus/` + taskId, {})
