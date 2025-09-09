@@ -23,7 +23,7 @@
             @for (task of taskDataList; track task.taskId) {
             <tr [ngClass]="{ 'rowTable': task.completed }">
                 <td [ngClass]="{ 'rowLine': task.completed }">{{task.startTime.slice(0, 5)}}</td>
-                <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskDuration}}</td>
+                <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskDuration | durationFormat}}</td>
                 <td [ngClass]="{ 'rowLine': task.completed }">{{task.endTime.slice(0, 5)}}</td>
                 <td [ngClass]="{ 'rowLine': task.completed }">{{task.taskProcedure}}</td>
                 <!-- <td [ngClass]="{ 'rowLine': task.completed }">

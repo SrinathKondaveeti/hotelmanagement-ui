@@ -4,10 +4,11 @@ import { TaskData } from '../data/task-data';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { DurationFormatPipe } from "../pipe/duration-format.pipe";
 
 @Component({
   selector: 'app-tasks',
-  imports: [CommonModule],
+  imports: [CommonModule, DurationFormatPipe],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',
 })
