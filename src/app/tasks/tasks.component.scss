@@ -147,7 +147,7 @@ color: white;
 
 .wrap-text {
   white-space: normal;         /* allow wrapping */
-  word-break: break-word;      /* break long words */
-  overflow-wrap: anywhere;     /* newer property, good support */
+  // word-break: break-word;      /* break long words */
+  // overflow-wrap: anywhere;     /* newer property, good support */
   max-width: 400px;            /* optional: restrict width */
 }
