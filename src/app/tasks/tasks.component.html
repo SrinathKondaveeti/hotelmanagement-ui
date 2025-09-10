@@ -40,7 +40,7 @@
                         <input type="checkbox" (click)="taskStatusUpdate(task.taskId)" [checked]="task.completed">Done
                         <span class="checkmark"></span>
                     </label></td>
-                <td [ngClass]="{ 'rowLine': task.completed }">
+                <td [ngClass]="{ 'rowLine': task.completed }" class="wrap-text">
                     @for (recipe of task.taskFor; track recipe) {
                     {{recipe}},
                     }
