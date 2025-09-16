@@ -1,7 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
-import { LoginComponent } from "./login/login.component";
-import { RegisterComponent } from "./register/register.component";
 import { ManageDataService } from './store/manage-data.service';
 import { MenuComponent } from "./menu/menu.component";
 import { CartComponent } from "./cart/cart.component";

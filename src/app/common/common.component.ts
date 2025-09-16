@@ -61,6 +61,20 @@ export class CommonComponent {
     this.displayEditTaskForm = false;
   }
 
+    createAllItems() {
+    this.httpClient
+      .get<Array<any>>(
+        `${this.baseUrl}/item/createBulkItem`
+      )
+      .subscribe((data) => {
+        console.log('items created');
+      });
+    this.displayAllTasks = false;
+    this.createNewTask = false;
+    this.deleteConfirmationPopup = false;
+    this.displayEditTaskForm = false;
+  }
+
   getAllTasks() {
     this.httpClient
       .get<Array<TaskData>>(`${this.baseUrl}/task/allTasks`)
