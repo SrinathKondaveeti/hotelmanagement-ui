@@ -50,7 +50,7 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
   { path: '123/143/786/999/AP$/common/component', component: CommonComponent, canActivate: [AuthGuard] },
-  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent, canActivate: [AuthGuard] },
+  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent},
   // { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] }, // Protected route
   // Add other protected routes here
   { path: 'home', component: HomePageComponent},
