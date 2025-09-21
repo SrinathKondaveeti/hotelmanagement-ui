@@ -40,7 +40,7 @@ export class VerifyEmailComponent implements OnInit {
   loading = false;
   message: string = '';
   isNavigatingFrom = '';
-  email='';
+  // email='';
 
   constructor(
     private fb: FormBuilder,
@@ -75,11 +75,10 @@ export class VerifyEmailComponent implements OnInit {
         this.loading = false;
         this.message = response.message;
         this.snackBar.open(response.message, 'Close', { duration: 5000 });
-        this.email = this.emailVerificationForm.value.
+        // this.email = response.accessToken;
         this.emailVerificationForm.reset();
         if(this.isNavigatingFrom && this.isNavigatingFrom === 'registration'){
-          this.router.navigate(['/entered']);
-             alert("login");
+          this.router.navigate(['/login']);
         }else{
             alert("reset-password");
             this.router.navigate(['/reset-password'], {
