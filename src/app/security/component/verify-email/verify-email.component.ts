@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { EmailVerificationRequest } from '../../data/email-verification-request-data';
 
@@ -39,19 +39,27 @@ export class VerifyEmailComponent implements OnInit {
   emailVerificationForm!: FormGroup;
   loading = false;
   message: string = '';
+  isNavigatingFrom = '';
+  email='';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.emailVerificationForm = this.fb.group({
       verificationCode : ['', [Validators.required, Validators.minLength(6)]],
     });
+     const navigation = this.router.getCurrentNavigation();
+     if (navigation && navigation.extras && navigation.extras.state) {
+       this.isNavigatingFrom = navigation.extras.state['isNavigatingFrom'];
+     }
+
   }
 
   onSubmit(): void {
@@ -65,9 +73,20 @@ export class VerifyEmailComponent implements OnInit {
     this.authService.verifyEmail(request).subscribe({
       next: (response) => {
         this.loading = false;
-        this.message = response;
-        this.snackBar.open(response, 'Close', { duration: 5000 });
+        this.message = response.message;
+        this.snackBar.open(response.message, 'Close', { duration: 5000 });
+        this.email = this.emailVerificationForm.value.
         this.emailVerificationForm.reset();
+        if(this.isNavigatingFrom && this.isNavigatingFrom === 'registration'){
+          this.router.navigate(['/entered']);
+             alert("login");
+        }else{
+            alert("reset-password");
+            this.router.navigate(['/reset-password'], {
+              queryParams: { email: response.accessToken }
+           });
+
+        }
       },
       error: (error) => {
         this.loading = false;

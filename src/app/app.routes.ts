@@ -43,14 +43,14 @@ import { VerifyEmailComponent } from './security/component/verify-email/verify-e
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  // { path: 'login', component: LoginComponent },
-  // { path: 'register', component: RegisterComponent },
-  // { path: 'verify-email', component: VerifyEmailComponent },
-  // { path: 'forgot-password', component: ForgotPasswordComponent },
-     { path: '123/143/786/999/AP$/common/component', component: CommonComponent },
-  // { path: 'menu', component: MenuComponent },
-  // { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
+  { path: '123/143/786/999/AP$/common/component', component: CommonComponent, canActivate: [AuthGuard] },
+  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent, canActivate: [AuthGuard] },
   // { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] }, // Protected route
   // Add other protected routes here
   { path: 'home', component: HomePageComponent},

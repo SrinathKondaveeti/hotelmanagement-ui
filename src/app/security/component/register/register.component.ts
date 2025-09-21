@@ -69,7 +69,9 @@ export class RegisterComponent implements OnInit {
       next: (response) => {
         this.loading = false;
         this.snackBar.open(response.message, 'Close', { duration: 3000 });
-        this.router.navigate(['/verify-email']);
+        //this.router.navigate(['/verify-email']);
+        const isNavigatingFrom = 'registration';
+        this.router.navigate(['/verify-email'], { state: {isNavigatingFrom} });
       },
       error: (error) => {
         this.loading = false;

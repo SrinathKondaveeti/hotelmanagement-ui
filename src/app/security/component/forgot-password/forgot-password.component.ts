@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -33,7 +33,8 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +57,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.message = response;
         this.snackBar.open(response, 'Close', { duration: 5000 });
         this.forgotPasswordForm.reset();
+        this.router.navigate(['/verify-email']);
       },
       error: (error) => {
         this.loading = false;

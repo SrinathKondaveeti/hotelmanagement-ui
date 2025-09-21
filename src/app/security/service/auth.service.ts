@@ -65,11 +65,21 @@ export class AuthService {
     );
   }
 
-    verifyEmail(request: EmailVerificationRequest): Observable<string> {
-    return this.http.post(`${this.baseUrl}/api/auth/verify-email`, request, { responseType: 'text' }).pipe(
-      catchError(this.handleError)
-    );
-  }
+  //   verifyEmail(request: EmailVerificationRequest): Observable<AuthResponse> {
+  //   return this.http.post(`${this.baseUrl}/api/auth/verify-email`, request).pipe(
+  //     tap((response) => { response }),
+  //     catchError(this.handleError)
+  //   );
+  // }
+
+  verifyEmail(request: EmailVerificationRequest): Observable<AuthResponse> {
+  return this.http.post<AuthResponse>(`${this.baseUrl}/api/auth/verify-email`, request).pipe(
+    tap((response: AuthResponse) => { // Optional: You can explicitly type the response here for clarity
+      console.log('Verification response:', response); // A good place to log the response
+    }),
+    catchError(this.handleError)
+  );
+}
 
 
   resetPassword(request: ResetPasswordRequest): Observable<string> {

@@ -27,7 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 export class ResetPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   loading = false;
-  token: string | null = null;
+  email: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -38,12 +38,18 @@ export class ResetPasswordComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.token = this.route.snapshot.queryParamMap.get('token');
-    if (!this.token) {
-      this.snackBar.open('Invalid or missing reset token.', 'Close', { duration: 5000 });
-      this.router.navigate(['/forgot-password']);
-      return;
-    }
+    // this.token = this.route.snapshot.queryParamMap.get('token');
+    // if (!this.token) {
+    //   this.snackBar.open('Invalid or missing reset token.', 'Close', { duration: 5000 });
+    //   this.router.navigate(['/forgot-password']);
+    //   return;
+    // }
+
+    this.route.queryParams.subscribe(params => {
+      this.email = params['email'];
+      console.log('Retrieved Token:', this.email);
+      // Now you can use the token for your logic, e.g., calling an API
+    });
 
     this.resetPasswordForm = this.fb.group(
       {
@@ -63,14 +69,14 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.resetPasswordForm.invalid || !this.token) {
+    if (this.resetPasswordForm.invalid || !this.email) {
       return;
     }
 
     this.loading = true;
     const { newPassword, confirmNewPassword } = this.resetPasswordForm.value;
     const request: ResetPasswordRequest = {
-      token: this.token,
+      token: this.email,
       newPassword,
       confirmNewPassword,
     };
