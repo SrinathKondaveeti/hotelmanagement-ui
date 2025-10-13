@@ -41,18 +41,42 @@ import { VerifyEmailComponent } from './security/component/verify-email/verify-e
 //   { path: '**', redirectTo: '/home' }
 // ];
 
+// export const routes: Routes = [
+//   { path: '', redirectTo: '/menu', pathMatch: 'full' },
+//   { path: 'login', component: LoginComponent },
+//   { path: 'register', component: RegisterComponent },
+//   { path: 'verify-email', component: VerifyEmailComponent },
+//   { path: 'forgot-password', component: ForgotPasswordComponent },
+//   { path: 'reset-password', component: ResetPasswordComponent },
+//   { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
+//   { path: '123/143/786/999/AP$/common/component', component: CommonComponent, canActivate: [AuthGuard] },
+//   { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent},
+//   // { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] }, // Protected route
+//   // Add other protected routes here
+//   { path: 'home', component: HomePageComponent},
+//   { path: '**', redirectTo: '/menu' }, // Redirect unknown paths
+// ];
+
+
+
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  // Public routes
+  { path: '', redirectTo: '/menu', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
+  { path: 'menu', component: MenuComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'home', component: HomePageComponent },
+  
+  // Protected routes with AuthGuard
+  
   { path: '123/143/786/999/AP$/common/component', component: CommonComponent, canActivate: [AuthGuard] },
-  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent},
-  // { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] }, // Protected route
-  // Add other protected routes here
-  { path: 'home', component: HomePageComponent},
-  { path: '**', redirectTo: '/home' }, // Redirect unknown paths
+  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent, canActivate: [AuthGuard] },
+  
+  
+  // Wildcard route should be last
+  { path: '**', redirectTo: '/menu' },
 ];

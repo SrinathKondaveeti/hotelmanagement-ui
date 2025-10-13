@@ -1,20 +1,70 @@
-.flex-container {
-    display: flex;
-    /* flex-wrap: wrap; Allows items to wrap on smaller screens */
-    gap: 1px; /* Space between items */
-  }
-  
-  .flex-item {
-    flex: 1; /* Items will grow and shrink equally */
-    min-width: 175px; /* Minimum width before wrapping */
-  }
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cardFooter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cardBody {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      column-gap: 2cap;
+    }
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+    input[type="number"] {
+      text-align: center;
+      padding: 7px 12px;
+    }
 
-  .pieceQuantity {
-  
-    width:30px
-  }
+    button{
+      background-color: #04AA6D;
+    border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+    }
 
-  .plateQuantity {
-  
-    width:30px
-  }
+    .piece-minus-btn {
+      padding: 7px 24px;
+    }
+
+    .piece-plus-btn {
+      padding: 7px 24px;
+    }
+
+    .plate-minus-btn{
+      padding: 7px 24px;
+    }
+
+    .plate-plus-btn{
+      padding: 7px 24px;
+    }
+
+    .headerContainer{
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logoutButton{
+
+      color: black;
+      background-color: red;
+      margin-left: 20px;
+    }

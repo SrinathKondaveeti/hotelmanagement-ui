@@ -1,49 +1,92 @@
-<h1>Menu Items</h1>
+<div class="headerContainer">
+  <h1>Menu</h1>
+
+  <div class="authButtons">
+
+    <button class="cartButton" (click)="goToCart()">Go To Cart</button>
+
+    @if(isUserAuthenticated()){
+    <button (click)="logout()" class="logoutButton">Logout</button>
+    } @else {
+    <button (click)="login()" class="loginButton">Login</button>
+    }
+  </div>
+</div>
+
 @for (item of manageDataService.selectedItemQuantityDataList(); track item.itemId) {
 
-  <div class="flex-container">
-    <div class="flex-item">{{item.name}}</div>
-    <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
-    <div class="flex-item">One pice price = @if (item.singlePiecePrice) {{{item.singlePiecePrice}}}@else {"N/A"}</div>
-    
-    <div class="flex-item">
-        <div id="pieceQuantityContainer">
-            @if (item.singlePiecePrice) {
-                <button (click)="decreasePieceQuantity(item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction">-</button>
-            <input type="number" id="pieceQuantity" [value]="item.selectedPieceQuantity" class="pieceQuantity" readonly/>
-            <button (click)="increasePieceQuantity(item.itemId)" type="button" id="pieceAddition" class="pieceAddition" >+</button>
-            }@else {
-                <button (click)="decreasePieceQuantity(item.itemId)" type="button" id="pieceSubtraction" class="pieceSubtraction" disabled>-</button>
-                <input type="number" id="pieceQuantity" [value]="item.selectedPieceQuantity" class="pieceQuantity" readonly/>
-                <button (click)="increasePieceQuantity(item.itemId)" type="button" id="pieceAddition" class="pieceAddition" disabled>+</button>
-            }
-        </div>
+
+<div class="card">
+
+  <div class="cardHeader">
+    <div>
+      <h2>{{item.name}}</h2>
     </div>
-
-    <div class="flex-item">Total pices price = {{item.selectedTotalPiecePrice}}</div>
-    <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
-
-    <div class="flex-item">One plate price = {{item.platePrice}}<br>Quantity per plate = {{item.quantityPerPlate}}</div>
-
-    <div class="flex-item">
-        <div id="plateQuantityContainer">
-            <button (click)="decreasePlateQuantity(item.itemId)" type="button" id="plateSubtraction" class="plateSubtraction">-</button>
-            <input type="number" id="plateQuantity" [value]="item.selectedPlateQuantity" class="plateQuantity" readonly/>
-            <button (click)="increasePlateQuantity(item.itemId)" type="button" id="plateAddition" class="plateAddition">+</button>
-        </div>
+    <div>
+      <label for="parcel"> Is Parcel</label>
+      <input type="checkbox" (click)="isParcel(item.itemId)" [value]="item.isParcel"
+        [checked]="(item.isParcel) ? true : null">
     </div>
-
-    <div class="flex-item">Total plate(s) price = {{item.selectedTotalPlatePrice}} rs</div>
-    <div class="flex-item"><input (click)="isParcel(item.itemId)" type="checkbox" [value]="item.isParcel" [checked]="(item.isParcel) ? true : null">Parcel</div>
-    <!-- <div class="flex-item"><hr width="2" size="25" style="margin: 0 auto;" /></div> -->
-    <div class="flex-item">Total Price = {{item.selectedTotalItemPrice}} rs</div>
-    <div class="flex-item"><button (click)="addToCart(item.itemId)">Add To Cart</button></div>
-
   </div>
   <hr>
 
-}@empty {
-    <p>No items found</p>
-  }
+  <div class="cardBody">
+    <img src="assets/chinna-punugu.png" alt="ChinnaPunugulu" style="width:45%; height:300px">
+    <div>
+      @if (item.singlePiecePrice) {
+      <p>piece price = @if (item.singlePiecePrice) { {{item.singlePiecePrice}} rs}@else {"N/A"}</p>
 
-  <button (click)="goToCart()">Go To Cart</button>
+      <div class="piece-quantity-input">
+        @if (item.singlePiecePrice) {
+        <button class="piece-minus-btn" type="button" name="pieceMinus"
+          (click)="decreasePieceQuantity(item.itemId)">-</button>
+        <input class="piece-input-box" type="number" [value]="item.selectedPieceQuantity" min="1" style="width:10%"
+          readonly>
+        <button class="piece-plus-btn" type="button" name="piecePlus"
+          (click)="increasePieceQuantity(item.itemId)">+</button>
+        }@else {
+        <button class="piece-minus-btn" type="button" name="pieceMinus" (click)="decreasePieceQuantity(item.itemId)"
+          disabled>-</button>
+        <input class="piece-input-box" type="number" [value]="item.selectedPieceQuantity" min="1" style="width:10%"
+          readonly>
+        <button class="piece-plus-btn" type="button" name="piecePlus" (click)="increasePieceQuantity(item.itemId)"
+          disabled>+</button>
+        }
+      </div>
+      
+
+      <p>Total piece(s) price = {{item.selectedTotalPiecePrice}} rs/-</p>
+      <hr>
+       }
+      
+      @if(item.quantityPerPlate){
+      <p>Quantity per plate = {{item.quantityPerPlate}}/-</p>
+      }
+      <p>One plate price = {{item.platePrice}} rs/- </p>
+      <div class="plate-quantity-input">
+        <button class="plate-minus-btn" type="button" name="plateMinus"
+          (click)="decreasePlateQuantity(item.itemId)">-</button>
+        <input class="plate-input-box" type="number" [value]="item.selectedPlateQuantity" min="1" style="width:10%"
+          readonly>
+        <button class="plate-plus-btn" type="button" name="platePlus"
+          (click)="increasePlateQuantity(item.itemId)">+</button>
+      </div>
+      <p>Total plate(s) price = {{item.selectedTotalPlatePrice}} rs/-</p>
+    </div>
+  </div>
+ <hr>
+  <div class="cardFooter">
+      <div>
+        <h3>Total item price = {{item.selectedTotalItemPrice}} rs/- </h3>
+      </div>
+      <div>
+        <button (click)="addToCart(item.itemId)">Add To Cart</button>
+      </div>
+  </div>
+
+
+</div>
+
+}@empty {
+<p>No items found</p>
+}

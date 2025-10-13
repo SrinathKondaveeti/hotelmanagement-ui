@@ -1,10 +1,12 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ManageDataService } from '../store/manage-data.service';
 import { HttpClient } from '@angular/common/http';
 import { OrderData } from '../data/order-data';
 import { CartData } from '../data/cart-data';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { AuthService } from '../security/service/auth.service';
+import { map } from 'rxjs';
 
 
 @Component({
@@ -16,8 +18,34 @@ import { environment } from '../../environments/environment';
 export class CartComponent {
 
   private baseUrl = environment.apiBaseUrl;
+  private authService = inject(AuthService);
+  isUserAuthenticated = signal(false);
 
+  ngOnInit() {
+  
+  
+      this.authService.isAuthenticated$.pipe(
+            map((isAuthenticated) => {
+              if (isAuthenticated) {
+                this.isUserAuthenticated.set(isAuthenticated);
+              } else {
+                  this.isUserAuthenticated.set(false);
+              }
+            })
+          ).subscribe();
+  
+  
+  
+    }
+  
 
+  logout(){
+     this.authService.logout();
+  }
+
+  login(){
+    this.router.navigate(['/login']);
+  }
   
 removeFromCart(itemId : string) {
   this.manageDataService.cartData().cartEntries = this.manageDataService.cartData().cartEntries.filter((item) => item.itemId !== itemId);

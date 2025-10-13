@@ -80,7 +80,6 @@ export class VerifyEmailComponent implements OnInit {
         if(this.isNavigatingFrom && this.isNavigatingFrom === 'registration'){
           this.router.navigate(['/login']);
         }else{
-            alert("reset-password");
             this.router.navigate(['/reset-password'], {
               queryParams: { email: response.accessToken }
            });

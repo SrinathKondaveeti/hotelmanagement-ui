@@ -1,55 +1,77 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <title>HotelManagement</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
+<!DOCTYPE html>
+<html>
 
 <body>
 
-  <div class="">
-    <div>
-      <h3>Mirchi Bajji</h3>
-    </div>
-    <div class="">
-      <input type="checkbox" value="false">Parcel
-    </div>
-    <img src="C:\Users\konda\Desktop\layout\MirchiBajji.png" width="250" height="260">
-    <div class="">One pice price = 10</div>
-    <div class="">
-      <div id="pieceQuantityContainer">
-        <button type="button" id="pieceSubtraction" class="pieceSubtraction">-</button>
-        <input type="number" id="pieceQuantity" readonly="" class="pieceQuantity">
-        <button type="button" id="pieceAddition" class="pieceAddition">+</button>
-      </div>
-    </div>
-    <div class="">Total pices price = 0</div>
-    <div class="">One plate price = 20
-      <br>Quantity per plate = 2
-    </div>
-    <div class="">
-      <div id="plateQuantityContainer">
-        <button type="button" id="plateSubtraction" class="plateSubtraction">-</button>
-        <input type="number" id="plateQuantity" readonly="" class="plateQuantity">
-        <button type="button" id="plateAddition" class="plateAddition">+</button>
-      </div>
-    </div>
-    <div class="">Total plate(s) price = 0 rs</div>
-
-    <div class="">Total Price = 0 rs</div>
-    <div class="">
-      <button>Add To Cart</button>
-    </div>
-  </div>
-
   <style>
-
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cardFooter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cardBody {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+    input[type="number"] {
+      text-align: center;
+    }
   </style>
 
+  <div class="card">
+    <div class="cardHeader">
+      <div>
+        <h1>Chinna Punugu</h1>
+      </div>
+      <div>
+        <label for="parcel"> Is Parcel</label>
+        <input type="checkbox" value="true">
+      </div>
+    </div>
+    <hr>
+    <div class="cardBody">
+      <img src="ChinnaPunugulu.png" alt="Avatar" style="width:50%">
+      <div>
+        <p>piece price = 10rs/-</p>
+        <div class="piece-quantity-input">
+          <button class="piece-minus-btn" type="button" name="pieceMinus">-</button>
+          <input class="piece-input-box" type="number" value="1" min="1" style="width:10%">
+          <button class="piece-plus-btn" type="button" name="piecePlus">+</button>
+        </div>
+        <p>Total piece(s) price = 10rs/-</p>
+        <br>
+        <p>Quantity per plate = 16/-</p>
+        <div class="plate-quantity-input">
+          <button class="plate-minus-btn" type="button" name="plateMinus">-</button>
+          <input class="plate-input-box" type="number" value="2" min="1" style="width:10%">
+          <button class="plate-plus-btn" type="button" name="platePlus">+</button>
+        </div>
+        <p>Total plate(s) price = 20rs/-</p>
+      </div>
+    </div>
+    <hr>
+    <div class="cardFooter">
+      <div>
+        <h3>Total item price = 30rs </h3>
+      </div>
+      <div>
+        <button>Add To Cart</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

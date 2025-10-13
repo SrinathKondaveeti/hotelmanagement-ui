@@ -118,7 +118,7 @@ export class AuthService {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);
     this.isAuthenticatedSubject.next(false);
-    this.router.navigate(['/login']); // Redirect to login after logout
+    this.router.navigate(['/menu']); // Redirect to login after logout
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -35,6 +35,11 @@
                 "glob": "menu.png",
                 "input": "src/assets",
                 "output": "/assets"
+              },
+              {
+                "glob": "chinna-punugu.png",
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
             "styles": [

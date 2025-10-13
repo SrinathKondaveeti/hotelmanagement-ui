@@ -6,6 +6,8 @@ import { ManageDataService } from '../store/manage-data.service';
 import { CartEntryData } from '../data/cart-entry-data';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { AuthService } from '../security/service/auth.service';
+import { map, take } from 'rxjs';
 
 
 @Component({
@@ -21,6 +23,9 @@ export class MenuComponent {
   private router = inject(Router);
   public manageDataService = inject(ManageDataService);
   private baseUrl = environment.apiBaseUrl;
+  private authService = inject(AuthService);
+  isUserAuthenticated = signal(false);
+  chinnaPunugu = 'assets/chinna-punugu.png';
 
 
   goToCart() {
@@ -56,6 +61,28 @@ export class MenuComponent {
       // this.manageDataService.cartData.set({ cartEntries: itemQuantityDataList, totalCartPrice: 0 } as unknown as CartData);
       // console.log("cartData", this.manageDataService.cartData());
     });
+
+
+    this.authService.isAuthenticated$.pipe(
+          map((isAuthenticated) => {
+            if (isAuthenticated) {
+              this.isUserAuthenticated.set(isAuthenticated);
+            } else {
+                this.isUserAuthenticated.set(false);
+            }
+          })
+        ).subscribe();
+
+
+
+  }
+
+  logout(){
+     this.authService.logout();
+  }
+
+  login(){
+    this.router.navigate(['/login']);
   }
 
 

@@ -1,5 +1,18 @@
 
-<h1>Your Cart Items</h1>
+<div class="header">
+  <h1>Cart</h1>
+
+  <div class="authButtons">
+
+    <button class="cartButton" (click)="goToMenu()">Go To Menu</button>
+
+    @if(isUserAuthenticated()){
+      <button (click)="logout()" class="logoutButton">Logout</button>
+    } @else {
+      <button (click)="login()" class="loginButton">Login</button>
+    }
+  </div>
+</div>
 @for (item of manageDataService.cartData().cartEntries; track item.itemId) {
 
   <div class="flex-container">
@@ -95,4 +108,4 @@
     }
 
 
-    <button (click)="goToMenu()">Go To Menu</button> <button (click)="goToDispenser()">Go To OrderDispenser</button>
+    <button (click)="goToDispenser()">Go To OrderDispenser</button>

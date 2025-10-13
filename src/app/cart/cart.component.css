@@ -46,3 +46,62 @@
   
     width:30px
   }
+
+
+  
+.header {
+  display: flex;
+  justify-content: center; /* Center the title horizontally */
+  align-items: center;
+  position: relative;
+  padding: 1rem;
+  background-color: #f8f9fa; /* Optional styling */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  text-align: center;
+  color: green;
+}
+
+/* Position authButtons to top-right */
+.authButtons {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+/* Style buttons */
+.authButtons button {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cartButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .authButtons {
+    position: static;
+    margin-top: 0.5rem;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+}

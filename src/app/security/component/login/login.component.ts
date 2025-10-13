@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.loading = false;
         this.snackBar.open(response.message, 'Close', { duration: 3000 });
-        this.router.navigate(['/home']);
+        this.router.navigate(['/menu']);
       },
       error: (error) => {
         this.loading = false;
