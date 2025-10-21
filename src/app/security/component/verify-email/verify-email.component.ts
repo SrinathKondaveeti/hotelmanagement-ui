@@ -39,7 +39,7 @@ export class VerifyEmailComponent implements OnInit {
   emailVerificationForm!: FormGroup;
   loading = false;
   message: string = '';
-  isNavigatingFrom = '';
+  navigationSource = '';
   // email='';
 
   constructor(
@@ -55,11 +55,9 @@ export class VerifyEmailComponent implements OnInit {
     this.emailVerificationForm = this.fb.group({
       verificationCode : ['', [Validators.required, Validators.minLength(6)]],
     });
-     const navigation = this.router.getCurrentNavigation();
-     if (navigation && navigation.extras && navigation.extras.state) {
-       this.isNavigatingFrom = navigation.extras.state['isNavigatingFrom'];
-     }
-
+     this.route.queryParams.subscribe(params => {
+     this.navigationSource = params['source'];
+    });
   }
 
   onSubmit(): void {
@@ -77,7 +75,7 @@ export class VerifyEmailComponent implements OnInit {
         this.snackBar.open(response.message, 'Close', { duration: 5000 });
         // this.email = response.accessToken;
         this.emailVerificationForm.reset();
-        if(this.isNavigatingFrom && this.isNavigatingFrom === 'registration'){
+        if(this.navigationSource && this.navigationSource === 'registration'){
           this.router.navigate(['/login']);
         }else{
             this.router.navigate(['/reset-password'], {

@@ -17,6 +17,7 @@ export class AuthService {
   private baseUrl = environment.apiBaseUrl;
   private accessTokenKey = 'accessToken';
   private refreshTokenKey = 'refreshToken';
+  private userPrivilegesKey = 'userPrivileges';
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasTokens());
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
@@ -35,20 +36,44 @@ export class AuthService {
     return localStorage.getItem(this.refreshTokenKey);
   }
 
+    getUsersPrivileges(): string | null {
+    return localStorage.getItem(this.userPrivilegesKey);
+  }
+
   private setTokens(accessToken: string, refreshToken: string): void {
     localStorage.setItem(this.accessTokenKey, accessToken);
     localStorage.setItem(this.refreshTokenKey, refreshToken);
     this.isAuthenticatedSubject.next(true);
   }
 
+   private setUsersPrivileges(usersPrivileges: string): void {
+    localStorage.setItem(this.userPrivilegesKey, usersPrivileges);
+  }
+
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/api/auth/login`, request).pipe(
       tap((response) => {
         this.setTokens(response.accessToken, response.refreshToken);
+        this.setUsersPrivileges(this.decodeJwtPayload(response.accessToken)?.authorities?.join(','));
       }),
       catchError(this.handleError)
     );
   }
+
+
+    private decodeJwtPayload(token: string): any | null {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    const payload = parts[1];
+    const json = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(decodeURIComponent(escape(json)));
+  } catch {
+    return null;
+  }
+}
+
+
 
   register(request: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/api/auth/register`, request).pipe(
@@ -117,8 +142,10 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);
+    localStorage.removeItem(this.userPrivilegesKey);
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/menu']); // Redirect to login after logout
+    window.location.reload();
   }
 
   private handleError(error: HttpErrorResponse) {

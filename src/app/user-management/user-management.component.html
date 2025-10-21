@@ -1,0 +1,44 @@
+<div class="container">
+  <form>
+    <div class="row">
+      <div class="col-25">
+        <label for="email">Email</label>
+      </div>
+      <div class="col-75">
+        <input [(ngModel)]="userEmail" type="text" id="email" name="email" placeholder="User e-mail..">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="userRole">Role</label>
+      </div>
+      <div class="col-75">
+        <input [(ngModel)]="userRole" type="text" id="userRole" name="userRole" placeholder="User role..">
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-25">
+        <label for="country">Country</label>
+      </div>
+      <div class="col-75">
+        <select id="country" name="country">
+          <option value="australia">Australia</option>
+          <option value="canada">Canada</option>
+          <option value="usa">USA</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="subject">Subject</label>
+      </div>
+      <div class="col-75">
+        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+      </div>
+    </div> -->
+    <br>
+    <div class="row">
+      <input type="submit" value="Submit" (click)="updateUserRoles()">
+    </div>
+  </form>
+</div>

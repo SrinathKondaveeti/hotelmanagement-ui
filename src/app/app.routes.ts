@@ -12,6 +12,8 @@ import { ForgotPasswordComponent } from './security/component/forgot-password/fo
 import { ResetPasswordComponent } from './security/component/reset-password/reset-password.component';
 import { AuthGuard } from './security/service/auth-guard';
 import { VerifyEmailComponent } from './security/component/verify-email/verify-email.component';
+import { LayoutManagementGuard } from './service/layout-guard';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 // export const routes: Routes = [
 
@@ -62,20 +64,22 @@ import { VerifyEmailComponent } from './security/component/verify-email/verify-e
 export const routes: Routes = [
   // Public routes
   { path: '', redirectTo: '/menu', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'verify-email', component: VerifyEmailComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'menu', component: MenuComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'home', component: HomePageComponent },
+  
+  { path: 'login', component: LoginComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: true } },
+  { path: 'register', component: RegisterComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: true } },
+  { path: 'verify-email', component: VerifyEmailComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: true } },
+  { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: true } },
+  { path: 'reset-password', component: ResetPasswordComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: true } },
+  { path: 'menu', component: MenuComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: false } },
+  { path: 'cart', component: CartComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: false } },
+  { path: 'home', component: HomePageComponent, canActivate: [LayoutManagementGuard], data: { hideHeader: false } },
   
   // Protected routes with AuthGuard
   
-  { path: '123/143/786/999/AP$/common/component', component: CommonComponent, canActivate: [AuthGuard] },
-  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent, canActivate: [AuthGuard] },
-  
+  { path: '123/143/786/999/AP$/common/component', component: CommonComponent, canActivate: [AuthGuard, LayoutManagementGuard], data: { hideHeader: false } },
+  { path: 'task/123/143/786/999/AP$/tasks', component: TasksComponent, canActivate: [AuthGuard, LayoutManagementGuard], data: { hideHeader: false } },
+  { path: 'manage/users', component: UserManagementComponent, canActivate: [AuthGuard, LayoutManagementGuard], data: { hideHeader: false } },
+
   
   // Wildcard route should be last
   { path: '**', redirectTo: '/menu' },

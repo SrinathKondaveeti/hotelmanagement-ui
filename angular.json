@@ -40,6 +40,11 @@
                 "glob": "chinna-punugu.png",
                 "input": "src/assets",
                 "output": "/assets"
+              },
+              {
+                "glob": "AP_Logo_small.png",
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
             "styles": [

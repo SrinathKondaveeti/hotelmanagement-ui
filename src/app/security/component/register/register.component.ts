@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../service/auth.service';
@@ -12,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-register',
-    imports: [
+  imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterLink,
@@ -20,7 +25,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule, // Add MatFormFieldModule
     MatInputModule, // Add MatInputModule
     MatButtonModule, // Add MatButtonModule
-    MatSnackBarModule // Add MatSnackBarModule if you use it in the template
+    MatSnackBarModule, // Add MatSnackBarModule if you use it in the template
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
@@ -62,20 +67,31 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    const { username, email, password, confirmPassword } = this.registerForm.value;
-    const request: RegisterRequest = { username, email, password, confirmPassword };
+    const { username, email, password, confirmPassword } =
+      this.registerForm.value;
+    const request: RegisterRequest = {
+      username,
+      email,
+      password,
+      confirmPassword,
+    };
 
     this.authService.register(request).subscribe({
       next: (response) => {
         this.loading = false;
         this.snackBar.open(response.message, 'Close', { duration: 3000 });
         //this.router.navigate(['/verify-email']);
-        const isNavigatingFrom = 'registration';
-        this.router.navigate(['/verify-email'], { state: {isNavigatingFrom} });
+        this.router.navigate(['/verify-email'], {
+          queryParams: { source: 'registration' },
+        });
       },
       error: (error) => {
         this.loading = false;
-        this.snackBar.open(error.message || 'Registration failed. Please try again.', 'Close', { duration: 5000 });
+        this.snackBar.open(
+          error.message || 'Registration failed. Please try again.',
+          'Close',
+          { duration: 5000 }
+        );
       },
     });
   }
