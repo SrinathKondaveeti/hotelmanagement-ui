@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -33,6 +34,7 @@ import { MatInputModule } from '@angular/material/input';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   loading = false;
+  private enableEmailVerification = environment.enableEmailVerification;
 
   constructor(
     private fb: FormBuilder,
@@ -81,9 +83,20 @@ export class RegisterComponent implements OnInit {
         this.loading = false;
         this.snackBar.open(response.message, 'Close', { duration: 3000 });
         //this.router.navigate(['/verify-email']);
-        this.router.navigate(['/verify-email'], {
+        if(this.enableEmailVerification === 'true'){
+              this.router.navigate(['/verify-email'], {
           queryParams: { source: 'registration' },
         });
+        }else{
+
+          this.snackBar.open(
+          'Registration successfull . Please login.',
+          'Close',
+          { duration: 5000 }
+        );
+              this.router.navigate(['/login']);
+        }
+        
       },
       error: (error) => {
         this.loading = false;
